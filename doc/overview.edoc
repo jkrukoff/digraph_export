@@ -1,0 +1,68 @@
+@author John Krukoff <github@cultist.org>
+@copyright 2018 John Krukoff
+@version 1.0.0
+@title digraph_export
+@doc == Overview ==
+
+<img src="graph.gif" alt="Graph Animation"/>
+
+The digraph_export module provides a set of utility functions for converting
+digraph graphs into common graph file formats. In addition, graph viewing
+programs can be launched to view those files.
+
+It is intended for use in debugging and visualizing graphs, not for
+customizing the export process. As such, no graph features beyond digraph's
+built in ID and label constructs are supported.
+
+== Usage ==
+
+```
+1> Graph = digraph:new(),
+    digraph:add_vertex(Graph, 1, first),
+    digraph:add_vertex(Graph, 2, second),
+    digraph:add_edge(Graph, edge, 1, 2, connected).
+2> GraphML = digraph_export:convert(Graph, graphml).
+3> digraph_export:view(GraphML, graphml, cytoscape).
+'''
+
+<img src="usage.png" alt="Cytoscape Example Graph"/>
+
+=== Formats ===
+
+The following output file formats are supported:
+
+<ul>
+<li><a href="http://www.graphviz.org/doc/info/lang.html">dot</a></li>
+<li><a href="http://graphml.graphdrawing.org/">graphml</a></li>
+</ul>
+
+=== Programs ===
+
+If installed and  present on the current $PATH, the following programs can be
+launched:
+
+<ul>
+<li><a href="https://gephi.org/">gephi</a></li>
+<li><a href="https://cytoscape.org/">cytoscape</a></li>
+</ul>
+
+== Contributing ==
+
+Please fork the repo and submit a PR. Tests are run via:
+
+```
+rebar3 eunit
+'''
+
+The application has only been tested with Erlang/OTP 21 on Windows 10. Reports
+of success on other versions and operating systems are appreciated.
+
+== Lineage ==
+
+This module was created while working on an <a
+href="https://exercism.io/tracks/erlang/exercises/connect/solutions/caf32f0478c442dcb4e77db024c5d375">exercism.io
+erlang exercise</a>, where I had managed to incorrectly create the underlying
+graph. Once I finally found the bug, I realized it would have been quite a bit
+easier if I'd been able to visualize the graph I'd created.
+
+@end
