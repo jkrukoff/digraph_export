@@ -1,7 +1,6 @@
 # Docker build instructions.
 Dockerfile
 .dockerignore
-docker/.volumes
 
 # Revision control.
 .git/
@@ -10,11 +9,6 @@ docker/.volumes
 # Vim files.
 tags
 **/*.sw[po]
-
-# CI secrets.
-codeship.aes
-deploy/*
-config/test.config
 
 # Build tools in base image.
 ./rebar3

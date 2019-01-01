@@ -3,55 +3,8 @@ version: "3"
 
 services:
 
-  server:
-    image: ubnt/ubic-push-notifications
+  test:
     build:
       context: .
-    container_name: ubic-push-notifications
-    environment:
-      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
-      AWS_REGION: "${AWS_REGION}"
-      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
-      GRAPHITE_HOST: telegraf
-      GRAPHITE_PREFIX: push_notifications
-      MANDRILL_API_KEY: "${MANDRILL_API_KEY}"
-      SNS_REGION: "${SNS_REGION}"
-      SNS_ACCESS_KEY_ID: "${SNS_ACCESS_KEY_ID}"
-      SNS_SECRET_ACCESS_KEY: "${SNS_SECRET_ACCESS_KEY}"
-      SQS_INGEST_QUEUE: "${SQS_INGEST_QUEUE}"
-      S3_IMAGES_BUCKET: "${S3_IMAGES_BUCKET}"
-    command: run
-    links:
-      - telegraf
-
-  telegraf:
-    image: ubnt/ubic-push-notifications-telegraf
-    build:
-      context: docker/telegraf
-    container_name: ubic-push-notifications-telegraf
-    ports:
-      - 2003:2003
-    environment:
-      ENV: test
-      INFLUX_DATABASE: telegraf
-      INFLUX_HOST: influx
-      INFLUX_PORT: 8086
-      INFLUX_USERNAME: admin
-      INFLUX_PASSWORD: secret
-    links:
-      - influx
-
-  influx:
-    image: influxdb:alpine
-    container_name: ubic-push-notifications-influx
-    ports:
-      - 8086:8086
-    environment:
-      INFLUXDB_HTTP_AUTH_ENABLED: "true"
-      INFLUXDB_ADMIN_USER: admin
-      INFLUXDB_ADMIN_PASSWORD: secret
-    volumes:
-      - ubic-push-notifications-influx:/var/lib/influxdb
-
-volumes:
-  ubic-push-notifications-influx:
+    container_name: digraph_export
+    command: test-unit

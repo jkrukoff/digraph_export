@@ -1,7 +1,6 @@
 MAKEFLAGS += --warn-undefined-variables
 .DEFAULT_GOAL := all
 
-PROPER_MODULES = $(addprefix -m ,$(shell find test/ -name '*_prop.erl' -exec basename -s '.erl' \{\} \;))
 PYTHON := python3
 REBAR ?= ./rebar3
 
@@ -80,8 +79,8 @@ test-integration:
 .PHONY: test-unit
 ## Run the unit test suite.
 test-unit: require-yamllint
-	${REBAR} as prod xref, dialyzer
-	${REBAR} as test do dialyzer, eunit, proper -d test ${PROPER_MODULES}, lint
+	${REBAR} as prod dialyzer
+	${REBAR} as test do dialyzer, eunit, proper, geas #, lint
 	yamllint -s .
 
 .virtualenv: requirements.txt
