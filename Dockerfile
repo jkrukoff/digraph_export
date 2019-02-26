@@ -1,4 +1,4 @@
-FROM erlang:21.2
+FROM erlang:21
 
 # Install build and test dependencies.
 # python3-pip: for installing python build dependencies.
