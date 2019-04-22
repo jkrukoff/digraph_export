@@ -101,6 +101,7 @@ easier if I'd been able to visualize the graph I'd created.
 
 ### Attribution ###
 Image by [Fir0002](https://commons.wikimedia.org/wiki/File:Dewy_spider_web.jpg)
+
 CC BY-SA 3.0 [`https://creativecommons.org/licenses/by/3.0/deed.en`](https://creativecommons.org/licenses/by/3.0/deed.en)
 
 
