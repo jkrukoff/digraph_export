@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module digraph_export</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module digraph_export</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>
+   Utility functions for converting and viewing digraph graphs.
+
+
+<h2><a name="description">Description</a></h2>
+   Utility functions for converting and viewing digraph graphs.
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-convert_properties">convert_properties()</a></h3>
+<p><tt>convert_properties() = [{name, string()} | pretty | {pretty, boolean()}]</tt></p>
+
+
+<h3 class="typedecl"><a name="type-format">format()</a></h3>
+<p><tt>format() = dot | graphml</tt></p>
+
+
+<h3 class="typedecl"><a name="type-program">program()</a></h3>
+<p><tt>program() = cytoscape | gephi</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#convert-2">convert/2</a></td><td>Equivalent to <tt>convert / 3</tt>.
+</td></tr>
+<tr><td valign="top"><a href="#convert-3">convert/3</a></td><td>  
+Serialize a digraph graph to the given file format.</td></tr>
+<tr><td valign="top"><a href="#formats-0">formats/0</a></td><td>
+  List all file formats supported by the convert functions.</td></tr>
+<tr><td valign="top"><a href="#programs-0">programs/0</a></td><td>
+  List all external viewing programs supported by the view function.</td></tr>
+<tr><td valign="top"><a href="#view-3">view/3</a></td><td>  
+Launch an external program to view a serialized graph.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="convert-2">convert/2</a></h3>
+<div class="spec">
+<p><tt>convert(Graph::<a href="digraph.html#type-graph">digraph:graph()</a>, Format::<a href="#type-format">format()</a>) -&gt; <a href="unicode.html#type-charlist">unicode:charlist()</a></tt><br></p>
+</div><p>Equivalent to <tt>convert / 3</tt>.</p>
+
+
+<h3 class="function"><a name="convert-3">convert/3</a></h3>
+<div class="spec">
+<p><tt>convert(Graph::<a href="digraph.html#type-graph">digraph:graph()</a>, Format::<a href="#type-format">format()</a>, Options::<a href="#type-convert_properties">convert_properties()</a>) -&gt; <a href="unicode.html#type-charlist">unicode:charlist()</a></tt><br></p>
+<p><tt>Graph</tt>: An existing digraph graph.<br>
+<tt>Format</tt>: One of the supported file formats.<br>
+<tt>Options</tt>: Property list of conversion options.<br>
+</p>
+<p>returns: The serialized graph data.</p>
+</div><p><p>  
+Serialize a digraph graph to the given file format.</p>
+ 
+  <p>Options are passed as a property list. The two supported options  
+are:</p>
+ 
+  <ul>
+  <li>Name: An optional name to include in the graph file.</li>
+  <li>Pretty: A boolean value for if the output file should be
+  formatted for human readability or optimized for size.</li>
+  </ul></p>
+<p><b>See also:</b> <a href="#formats-0">formats/0</a>.</p>
+
+<h3 class="function"><a name="formats-0">formats/0</a></h3>
+<div class="spec">
+<p><tt>formats() -&gt; [<a href="#type-format">format()</a>, ...]</tt><br></p>
+</div><p>
+  List all file formats supported by the convert functions.</p>
+<p><b>See also:</b> <a href="#convert-2">convert/2</a>, <a href="#convert-3">convert/3</a>.</p>
+
+<h3 class="function"><a name="programs-0">programs/0</a></h3>
+<div class="spec">
+<p><tt>programs() -&gt; [<a href="#type-program">program()</a>, ...]</tt><br></p>
+</div><p>
+  List all external viewing programs supported by the view function.</p>
+<p><b>See also:</b> <a href="#view-3">view/3</a>.</p>
+
+<h3 class="function"><a name="view-3">view/3</a></h3>
+<div class="spec">
+<p><tt>view(Converted::<a href="unicode.html#type-charlist">unicode:charlist()</a>, Format::<a href="#type-format">format()</a>, Program::<a href="#type-program">program()</a>) -&gt; string()</tt><br></p>
+<p><tt>Converted</tt>: The serialized graph data.<br>
+<tt>Format</tt>: The format the graph was serialized in.<br>
+<tt>Program</tt>: The external program to launch.<br>
+</p>
+<p>returns: The output of the program.</p>
+</div><p><p>  
+Launch an external program to view a serialized graph. A temporary  
+file is created to store the graph and passed into the external  
+program.</p>
+ 
+  <p>The external program will need to be installed and on the current  
+PATH for this to function.</p>
+ 
+  This will block on the external program completing. Please spawn
+  this function in a separate process if that is not desired.</p>
+<p><b>See also:</b> <a href="#formats-0">formats/0</a>, <a href="#programs-0">programs/0</a>.</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc</i></p>
+</body>
+</html>

@@ -1,11 +1,13 @@
 %%%-------------------------------------------------------------------
 %%% @private
 %%% @doc
-%%% Serialization support for converting a digraph graph to the dot
-%%% file format.
+%%% Serialization support for converting a digraph graph to the <a
+%%% href="http://www.graphviz.org/doc/info/lang.html">dot</a> file
+%%% format.
 %%% @end
 %%%-------------------------------------------------------------------
 -module(digraph_export_dot).
+-behaviour(digraph_exporter).
 
 %% API
 -export([convert/3]).
@@ -14,10 +16,11 @@
 %%% API
 %%%===================================================================
 
--spec convert(Graph :: digraph:graph(),
-              Name :: unicode:charlist(),
-              Pretty :: boolean()) ->
-    unicode:charlist().
+-spec convert(Graph, Name, Pretty) -> Serialized when
+      Graph :: digraph:graph(),
+      Name :: unicode:charlist(),
+      Pretty :: boolean(),
+      Serialized :: unicode:charlist().
 convert(Graph, Name, Pretty) ->
     Ids = ids(Graph),
     Vertices = [format_vertex(V, Ids, indent(Pretty)) ||

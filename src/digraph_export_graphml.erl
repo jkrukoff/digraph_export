@@ -1,11 +1,14 @@
 %%%-------------------------------------------------------------------
 %%% @private
 %%% @doc
-%%% Serialization support for converting a digraph graph to the
-%%% GraphML format.
+%%% Serialization support for converting a digraph graph to the <a
+%%% href="http://graphml.graphdrawing.org/">GraphML</a> format.
+%%%
+%%% This is an XML based format.
 %%% @end
 %%%-------------------------------------------------------------------
 -module(digraph_export_graphml).
+-behaviour(digraph_exporter).
 
 %% API
 -export([convert/3]).
@@ -14,10 +17,11 @@
 %%% API
 %%%===================================================================
 
--spec convert(Graph :: digraph:graph(),
-              Name :: unicode:charlist(),
-              Pretty :: boolean()) ->
-    unicode:charlist().
+-spec convert(Graph, Name, Pretty) -> Serialized when
+      Graph :: digraph:graph(),
+      Name :: unicode:charlist(),
+      Pretty :: boolean(),
+      Serialized :: unicode:charlist().
 convert(Graph, Name, Pretty) ->
     Nodes = [format_vertex(V) || V <- vertices(Graph)],
     Edges = [format_edge(E) || E <- edges(Graph)],

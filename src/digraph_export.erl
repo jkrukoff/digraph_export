@@ -16,11 +16,24 @@
          view/3]).
 
 -type format() :: dot | graphml.
+%% Available output formats.
+-type formats() :: [format(), ...].
+%% A list of output formats.
 -type program() :: cytoscape | gephi.
+%% Available graph viewer programs.
+-type programs() :: [program(), ...].
+%% A list of graph viewer programs.
 
 -type convert_properties() :: [{name, string()} |
                                pretty | 
                                {pretty, boolean()}].
+%% Conversion proplist values.
+
+-export_type([format/0,
+              formats/0,
+              program/0,
+              programs/0,
+              convert_properties/0]).
 
 %%%===================================================================
 %%% API
@@ -31,7 +44,8 @@
 %% @end
 %% @see convert/2
 %% @see convert/3
--spec formats() -> [format(), ...].
+-spec formats() -> Formats when
+      Formats :: formats().
 formats() ->
     [dot, graphml].
 
@@ -39,14 +53,16 @@ formats() ->
 %% List all external viewing programs supported by the view function.
 %% @end
 %% @see view/3
--spec programs() -> [program(), ...].
+-spec programs() -> Programs when
+      Programs :: programs().
 programs() ->
     [cytoscape, gephi].
 
 %% @equiv convert/3
--spec convert(Graph :: digraph:graph(),
-              Format :: format()) ->
-    unicode:charlist().
+-spec convert(Graph, Format) -> Serialized when
+      Graph :: digraph:graph(),
+      Format :: format(),
+      Serialized :: unicode:charlist().
 convert(Graph, Format) ->
     convert(Graph, Format, []).
 
@@ -67,10 +83,11 @@ convert(Graph, Format) ->
 %% @param Options Property list of conversion options.
 %% @returns The serialized graph data.
 %% @see formats/0
--spec convert(Graph :: digraph:graph(),
-              Format :: format(),
-              Options :: convert_properties()) ->
-    unicode:charlist().
+-spec convert(Graph, Format, Options) -> Serialized when
+      Graph :: digraph:graph(),
+      Format :: format(),
+      Options :: convert_properties(),
+      Serialized :: unicode:charlist().
 convert(Graph, dot, Options) ->
     {Name, Pretty} = parse_convert_properties(Options),
     digraph_export_dot:convert(Graph, Name, Pretty);
@@ -95,12 +112,13 @@ convert(Graph, graphml, Options) ->
 %% @returns The output of the program.
 %% @see formats/0
 %% @see programs/0
--spec view(Converted :: unicode:charlist(),
-           Format :: format(),
-           Program :: program()) ->
-    string().
-view(Converted, Format, Program) ->
-    Data = unicode:characters_to_binary(Converted),
+-spec view(Serialized, Format, Program) -> Output when
+      Serialized :: unicode:charlist(),
+      Format :: format(),
+      Program :: program(),
+      Output :: string().
+view(Serialized, Format, Program) ->
+    Data = unicode:characters_to_binary(Serialized),
     {ok, TempFile} = mktemp(?TEMP_LABEL, ?TEMP_FILE ++ extension(Format)),
     try
         ok = file:write_file(TempFile, Data),
@@ -125,9 +143,11 @@ extension(graphml) -> ".graphml".
 command(gephi) -> "gephi --console suppress \"~ts\"";
 command(cytoscape) -> "cytoscape -N \"~ts\"".
 
--spec mktemp(Label :: string(), File :: string()) ->
-    {ok, TempFile :: file:filename()} |
-    {error, Reason :: file:posix()}.
+-spec mktemp(Label, File) -> {ok, TempFile} | {error, Reason} when
+      Label :: string(),
+      File :: string(),
+      TempFile :: file:filename(),
+      Reason :: file:posix().
 mktemp(Label, File) ->
     RandBytes = crypto:strong_rand_bytes(8),
     RandChars = integer_to_list(binary:decode_unsigned(RandBytes), 36),
