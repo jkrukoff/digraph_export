@@ -44,7 +44,7 @@ dependency to your rebar.config as follows:
 3> digraph_export:view(GraphML, graphml, cytoscape).
 ```
 
-![Cytoscape Example Graph](usage.png)
+![Cytoscape Example Graph](doc/usage.png)
 
 
 #### Formats ####
