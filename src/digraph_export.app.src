@@ -1,6 +1,6 @@
 {application, digraph_export,
  [{description, "Conversion of digraph graphs to external file formats."},
-  {vsn, "1.0.0"},
+  {vsn, "1.0.1"},
   {applications, [kernel,
                   stdlib,
                   xmerl]},

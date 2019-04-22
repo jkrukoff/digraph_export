@@ -4,7 +4,7 @@
 
 Copyright (c) 2018 John Krukoff
 
-__Version:__ 1.0.0
+__Version:__ 1.0.1
 
 __Authors:__ John Krukoff ([`github@cultist.org`](mailto:github@cultist.org)).
 
